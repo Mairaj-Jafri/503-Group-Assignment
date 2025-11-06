@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whakapapa: Identity and Connection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .presentation {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            color: #00d4ff;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin: 25px 0 15px 0;
+            color: #ffd60a;
+        }
+
+        p, li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #00d4ff;
+            margin-bottom: 40px;
+        }
+
+        .intro-content {
+            text-align: center;
+        }
+
+        .group-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .member {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .member h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .problem-box {
+            background: rgba(255, 87, 87, 0.2);
+            border-left: 5px solid #ff5757;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .solution-box {
+            background: rgba(0, 212, 255, 0.2);
+            border-left: 5px solid #00d4ff;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .step {
+            background: rgba(123, 44, 191, 0.2);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid rgba(123, 44, 191, 0.4);
+        }
+
+        .step-number {
+            font-size: 2em;
+            color: #7b2cbf;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .subject-card {
+            background: rgba(255, 214, 10, 0.1);
+            border: 2px solid rgba(255, 214, 10, 0.3);
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
+
+        .subject-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .subject-icon {
+            font-size: 2.5em;
+        }
+
+        .pedagogy-tag {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+            border: 1px solid rgba(0, 212, 255, 0.5);
+        }
+
+        .learner-levels {
+            margin-top: 20px;
+        }
+
+        .level {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ffd60a;
+        }
+
+        .localisation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .local-card {
+            background: rgba(0, 168, 107, 0.2);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 168, 107, 0.4);
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .benefit-item {
+            background: rgba(123, 44, 191, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #7b2cbf;
+        }
+
+        .reference-list {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .reference-item {
+            margin: 20px 0;
+            padding-left: 30px;
+            text-indent: -30px;
+            font-size: 1em;
+        }
+
+        .highlight {
+            color: #ffd60a;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(0, 212, 255, 0.3);
+            border: 2px solid #00d4ff;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 212, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            h2 {
+                font-size: 2em;
+            }
+            .slide {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide" id="slide1">
+            <div class="intro-content">
+                <h1>Whakapapa: Identity and Connection</h1>
+                <p class="subtitle">A Cross-Curricular Approach to Revitalising Te Reo and Tikanga Māori</p>
+                <p style="margin-top: 40px; font-size: 1.3em;">TEEDU403_503 Te Aronga Māori<br>Group Presentation</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Introduction & Problem -->
+        <div class="slide" id="slide2">
+            <h2>Ko Wai Mātou | Who We Are</h2>
+            <div class="group-members">
+                <div class="member">
+                    <h4>Mathematics</h4>
+                    <p>[Your Name]</p>
+                </div>
+                <div class="member">
+                    <h4>Arts</h4>
+                    <p>[Name]</p>
+                </div>
+                <div class="member">
+                    <h4>Japanese/Languages</h4>
+                    <p>[Name]</p>
+                </div>
+                <div class="member">
+                    <h4>[Subject]</h4>
+                    <p>[Name]</p>
+                </div>
+            </div>
+            <div class="problem-box">
+                <h3>Te Raru | The Challenge</h3>
+                <p>Currently, te reo Māori and tikanga Māori are often taught in isolation—confined to specific classes or subjects. This limits authentic language use and fails to reflect how language naturally lives within cultural contexts.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Our Kaupapa -->
+        <div class="slide" id="slide3">
+            <h2>Te Kaupapa | Our Vision</h2>
+            <div class="solution-box">
+                <h3>"Whakapapa: Identity and Connection"</h3>
+                <p>A school-wide, cross-curricular project where students explore concepts of identity, lineage, and connection through different subject areas—creating a rich, interconnected learning experience that normalises te reo Māori across the curriculum.</p>
+            </div>
+            <h3>He aha ai? | Why This Approach?</h3>
+            <ul style="margin-left: 40px;">
+                <li>Makes te reo relevant and authentic across all learning areas</li>
+                <li>Honours the holistic nature of mātauranga Māori</li>
+                <li>Creates meaningful connections between subjects</li>
+                <li>Allows for deep personalisation and student voice</li>
+                <li>Engages whānau as partners in learning</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Implementation Steps -->
+        <div class="slide" id="slide4">
+            <h2>Ngā Mahinga | Implementation Steps</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h4>Planning & Partnership</h4>
+                    <p>School leadership agrees on term-long theme. Connect with local iwi and kaumātua for guidance and blessing of the project.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h4>Collaborative Design</h4>
+                    <p>Department heads map out contributions. Teachers co-plan integrated units using tuakana-teina model for student grouping.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h4>Teaching & Learning</h4>
+                    <p>Each subject teaches their component with embedded te reo and tikanga. Regular integration points connect learning across subjects.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <h4>Culminating Hui</h4>
+                    <p>Students present completed whakapapa projects to whānau and community. Celebration of learning and cultural connections.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Mathematics Integration -->
+        <div class="slide" id="slide5">
+            <h2>Pāngarau | Mathematics</h2>
+            <div class="subject-card">
+                <div class="subject-title">
+                    <span class="subject-icon">📊</span>
+                    <h3 style="margin: 0;">Data, Patterns & Timelines</h3>
+                </div>
+                <p><strong>Our Role:</strong> Students create visual timelines and data representations of whakapapa, exploring patterns across generations.</p>
+                
+                <h4>Te Reo Integration:</h4>
+                <ul style="margin-left: 30px;">
+                    <li>Mathematical vocabulary: tau (number), rārangi (line/sequence), tauira (pattern)</li>
+                    <li>Time words: ngā tau (years), te rau tau (century), whakatipuranga (generation)</li>
+                    <li>Graphing and data vocabulary in te reo</li>
+                </ul>
+
+                <div style="margin-top: 20px;">
+                    <span class="pedagogy-tag">Task-Based Learning</span>
+                    <span class="pedagogy-tag">CLIL (Content & Language Integrated Learning)</span>
+                </div>
+
+                <div class="learner-levels">
+                    <h4>Adaptations for Different Learners:</h4>
+                    <div class="level">
+                        <strong>Beginners:</strong> Create simple 3-generation family tree with te reo labels (matua, whaea, tipuna)
+                    </div>
+                    <div class="level">
+                        <strong>Intermediate:</strong> Design timeline showing 5 generations with birth/death dates, calculating age differences and life spans
+                    </div>
+                    <div class="level">
+                        <strong>Advanced:</strong> Create complex data visualizations showing migration patterns, population statistics, or demographic changes across whakapapa
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Arts Integration -->
+        <div class="slide" id="slide6">
+            <h2>Ngā Toi | The Arts</h2>
+            <div class="subject-card">
+                <div class="subject-title">
+                    <span class="subject-icon">🎨</span>
+                    <h3 style="margin: 0;">Visual Identity & Storytelling</h3>
+                </div>
+                <p><strong>Our Role:</strong> Students create visual representations of their whakapapa through portraiture, symbolism, and traditional Māori art forms.</p>
+                
+                <h4>Te Reo Integration:</h4>
+                <ul style="margin-left: 30px;">
+                    <li>Art vocabulary: toi (art), tā moko (tattoo), whakairo (carving)</li>
+                    <li>Describing artwork: āhua (form), tae (color), hanga (create)</li>
+                    <li>Understanding symbolism in Māori art and design</li>
+                </ul>
+
+                <div style="margin-top: 20px;">
+                    <span class="pedagogy-tag">Visual Learning</span>
+                    <span class="pedagogy-tag">Culturally Responsive Pedagogy</span>
+                </div>
+
+                <div class="learner-levels">
+                    <h4>Adaptations for Different Learners:</h4>
+                    <div class="level">
+                        <strong>Beginners:</strong> Create simple self-portraits with te reo labels for body parts and features
+                    </div>
+                    <div class="level">
+                        <strong>Intermediate:</strong> Design family crests incorporating traditional Māori patterns with meaning
+                    </div>
+                    <div class="level">
+                        <strong>Advanced:</strong> Create multi-media whakapapa artwork combining traditional and contemporary techniques with artist statements in te reo
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Languages Integration -->
+        <div class="slide" id="slide7">
+            <h2>Ngā Reo | Languages</h2>
+            <div class="subject-card">
+                <div class="subject-title">
+                    <span class="subject-icon">🌏</span>
+                    <h3 style="margin: 0;">Cultural Connections & Language Learning</h3>
+                </div>
+                <p><strong>Our Role:</strong> Draw comparisons between concepts of identity and family across cultures (Japanese, English, te reo Māori), teaching effective language acquisition strategies.</p>
+                
+                <h4>Te Reo Integration:</h4>
+                <ul style="margin-left: 30px;">
+                    <li>Compare family terms: Japanese (kazoku), Māori (whānau), English (family)</li>
+                    <li>Explore how different cultures structure genealogy</li>
+                    <li>Apply proven language learning strategies to te reo acquisition</li>
+                </ul>
+
+                <div style="margin-top: 20px;">
+                    <span class="pedagogy-tag">Comparative Linguistics</span>
+                    <span class="pedagogy-tag">Metalinguistic Awareness</span>
+                    <span class="pedagogy-tag">Second Language Acquisition</span>
+                </div>
+
+                <div class="learner-levels">
+                    <h4>Adaptations for Different Learners:</h4>
+                    <div class="level">
+                        <strong>Beginners:</strong> Learn basic family terms in te reo, Japanese, and English with visual supports
+                    </div>
+                    <div class="level">
+                        <strong>Intermediate:</strong> Compare cultural protocols around family and identity across cultures
+                    </div>
+                    <div class="level">
+                        <strong>Advanced:</strong> Research and present on linguistic concepts of whakapapa vs. genealogy vs. 家系 (kakei), analyzing cultural worldviews
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Additional Subject -->
+        <div class="slide" id="slide8">
+            <h2>[Additional Subject Area]</h2>
+            <div class="subject-card">
+                <div class="subject-title">
+                    <span class="subject-icon">📚</span>
+                    <h3 style="margin: 0;">[Subject Role in Whakapapa Project]</h3>
+                </div>
+                <p><strong>Our Role:</strong> [Description of how this subject contributes to the whakapapa theme]</p>
+                
+                <h4>Te Reo Integration:</h4>
+                <ul style="margin-left: 30px;">
+                    <li>[Subject-specific vocabulary and language use]</li>
+                    <li>[How language is embedded in activities]</li>
+                    <li>[Cultural concepts explored through this subject]</li>
+                </ul>
+
+                <div style="margin-top: 20px;">
+                    <span class="pedagogy-tag">[Relevant Pedagogy 1]</span>
+                    <span class="pedagogy-tag">[Relevant Pedagogy 2]</span>
+                </div>
+
+                <div class="learner-levels">
+                    <h4>Adaptations for Different Learners:</h4>
+                    <div class="level">
+                        <strong>Beginners:</strong> [Beginner-level activity]
+                    </div>
+                    <div class="level">
+                        <strong>Intermediate:</strong> [Intermediate-level activity]
+                    </div>
+                    <div class="level">
+                        <strong>Advanced:</strong> [Advanced-level activity]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Localisation -->
+        <div class="slide" id="slide9">
+            <h2>Te Wāhi Tūturu | Localisation</h2>
+            <p style="font-size: 1.3em; margin-bottom: 30px;">Our project is deeply rooted in <span class="highlight">[Your Local Area]</span></p>
+            
+            <div class="localisation-grid">
+                <div class="local-card">
+                    <h3>🏔️ Local Iwi Connection</h3>
+                    <p>Partnership with <strong>[Local Iwi Name]</strong> ensures cultural authenticity and accuracy. Kaumātua provide guidance on appropriate protocols and stories.</p>
+                </div>
+                <div class="local-card">
+                    <h3>🌊 Place-Based Learning</h3>
+                    <p>Students explore whakapapa of local landmarks—<strong>[local maunga, awa, or significant sites]</strong>—understanding connection to place.</p>
+                </div>
+                <div class="local-card">
+                    <h3>👨‍👩‍👧‍👦 Whānau Engagement</h3>
+                    <p>Family members invited to share their own whakapapa stories, creating an intergenerational learning community.</p>
+                </div>
+                <div class="local-card">
+                    <h3>🏘️ Community Resources</h3>
+                    <p>Utilize local marae (<strong>[Marae Name]</strong>), museum archives, and community knowledge holders as learning resources.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; padding: 30px; background: rgba(0, 168, 107, 0.2); border-radius: 10px; border-left: 5px solid #00a86b;">
+                <h3>Why Localisation Matters</h3>
+                <p>This isn't an add-on—it's essential. Whakapapa is inherently local and personal. By grounding our project in our specific community, we make te reo and tikanga meaningful and relevant to our students' lived experiences.</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Benefits & Conclusion -->
+        <div class="slide" id="slide10">
+            <h2>Ngā Painga | Benefits & Outcomes</h2>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <h4>For Ākonga (Students)</h4>
+                    <p>Deep, personal connection to te reo and tikanga through exploration of identity. Language learned in authentic, meaningful contexts.</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>For Kaiako (Teachers)</h4>
+                    <p>Collaborative professional development. Shared responsibility for te reo and tikanga across all subject areas.</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>For Whānau</h4>
+                    <p>Active partnership in education. Opportunity to share family stories and cultural knowledge with the school community.</p>
+                </div>
+                <div class="benefit-item">
+                    <h4>For Community</h4>
+                    <p>Strengthened relationships between school and local iwi. Increased visibility and normalisation of te reo Māori.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 50px; text-align: center; padding: 40px; background: rgba(123, 44, 191, 0.2); border-radius: 15px;">
+                <h3 style="font-size: 2em; margin-bottom: 20px;">E kore e mutu te whakapapa!</h3>
+                <p style="font-size: 1.3em;">Whakapapa never ends—this project creates ongoing connections between students, whānau, culture, and community.</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: References -->
+        <div class="slide" id="slide11">
+            <h2>Ngā Tohutoro | References</h2>
+            <div class="reference-list">
+                <div class="reference-item">
+                    Macfarlane, A. H., Glynn, T., Cavanagh, T., & Bateman, S. (2007). Creating culturally-safe schools for Māori students. <em>The Australian Journal of Indigenous Education, 36</em>, 65-76. https://doi.org/10.1017/S1326011100004439
+                </div>
+                <div class="reference-item">
+                    May, S., & Hill, R. (2005). Māori-medium education: Current issues and challenges. <em>International Journal of Bilingual Education and Bilingualism, 8</em>(5), 377-403. https://doi.org/10.1080/13670050508668614
+                </div>
+                <div class="reference-item">
+                    Ministry of Education. (2013). <em>Ka Hikitia—Accelerating success 2013-2017: The Māori education strategy</em>. Ministry of Education.
+                </div>
+                <div class="reference-item">
+                    Richards, J. C., & Rodgers, T. S. (2014). <em>Approaches and methods in language teaching</em> (3rd ed.). Cambridge University Press.
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; text-align: center;">
+                <h3>Ngā mihi nui ki a koutou katoa</h3>
+                <p style="font-size: 1.2em;">Thank you for your time and consideration</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="scrollToTop()">⬆️ Top</button>
+    </div>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Smooth scrolling for all navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
